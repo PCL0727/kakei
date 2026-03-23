@@ -10,224 +10,216 @@
 <title>記帳本</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
-
-:root {
-  --bg: #0d0f14;
-  --surface: #161920;
-  --surface2: #1e2130;
-  --border: #2a2e42;
-  --accent: #4ade80;
-  --accent-dim: rgba(74,222,128,0.12);
-  --text: #e8eaf2;
-  --muted: #6b7090;
-  --danger: #f87171;
-  --input-bg: #1a1d2a;
-  --overlay: rgba(0,0,0,0.7);
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:#0d0f14;color:#e8eaf2;font-family:'Noto Sans TC',sans-serif;font-size:15px;overscroll-behavior:none}
+:root{
+  --bg:#0d0f14;--surface:#161920;--surface2:#1e2130;--border:#2a2e42;
+  --accent:#4ade80;--accent-dim:rgba(74,222,128,0.12);
+  --text:#e8eaf2;--muted:#6b7090;--danger:#f87171;--input-bg:#1a1d2a;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-html, body { height: 100%; background: var(--bg); color: var(--text); font-family: 'Noto Sans TC', sans-serif; font-size: 15px; overscroll-behavior: none; }
+/* Layout */
+.app{display:flex;flex-direction:column;height:100vh;max-width:480px;margin:0 auto}
 
-.app { display: flex; flex-direction: column; height: 100vh; max-width: 480px; margin: 0 auto; overflow: visible; }
+/* Header */
+.header{padding:52px 20px 14px;background:var(--bg);border-bottom:1px solid var(--border);flex-shrink:0}
+.header-row{display:flex;justify-content:space-between;align-items:center}
+.header h1{font-size:22px;font-weight:700;letter-spacing:-0.5px}
+.header h1 span{color:var(--accent)}
+.ver{font-size:11px;font-weight:400;color:var(--muted);margin-left:6px}
 
-.header { padding: 52px 20px 16px; background: var(--bg); border-bottom: 1px solid var(--border); flex-shrink: 0; position: relative; }
-.header-top { display: flex; justify-content: space-between; align-items: center; }
-.header h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
-.header h1 span { color: var(--accent); }
-.export-btn { background: var(--surface2); border: 1px solid var(--border); color: var(--muted); font-size: 12px; font-family: inherit; padding: 6px 12px; border-radius: 20px; cursor: pointer; }
-.export-btn:active { background: var(--border); }
-.menu-btn { background: none; border: none; cursor: pointer; padding: 6px; display: flex; flex-direction: column; gap: 5px; }
-.menu-btn span { display: block; width: 22px; height: 2px; background: var(--muted); border-radius: 2px; transition: background 0.2s; }
-.menu-btn:active span { background: var(--text); }
-.dropdown { position: fixed; top: 88px; right: 16px; background: var(--surface2); border: 1px solid var(--border); border-radius: 14px; min-width: 160px; z-index: 9999; overflow: hidden; opacity: 0; pointer-events: none; transform: translateY(-8px); transition: all 0.2s; }
-.dropdown.open { opacity: 1; pointer-events: all; transform: translateY(0); }
-.dropdown-item { width: 100%; background: none; border: none; color: var(--text); font-family: inherit; font-size: 14px; padding: 14px 18px; text-align: left; cursor: pointer; display: flex; align-items: center; gap: 10px; }
-.dropdown-item:active { background: var(--border); }
-.dropdown-divider { height: 1px; background: var(--border); margin: 0; }
+/* Hamburger */
+.menu-btn{background:none;border:none;cursor:pointer;padding:8px;display:flex;flex-direction:column;gap:5px;-webkit-tap-highlight-color:transparent}
+.menu-btn span{display:block;width:22px;height:2px;background:var(--muted);border-radius:2px}
 
-.tabs { display: flex; background: var(--bg); border-bottom: 1px solid var(--border); flex-shrink: 0; }
-.tab { flex: 1; padding: 12px; text-align: center; font-size: 13px; font-weight: 500; color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; font-family: inherit; background: none; border-top: none; border-left: none; border-right: none; }
-.tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+/* Dropdown */
+.dropdown{position:fixed;top:80px;right:16px;background:var(--surface2);border:1px solid var(--border);border-radius:14px;min-width:160px;z-index:9999;overflow:hidden;display:none}
+.dropdown.open{display:block}
+.drop-item{width:100%;background:none;border:none;color:var(--text);font-family:inherit;font-size:14px;padding:14px 18px;text-align:left;cursor:pointer;display:flex;align-items:center;gap:10px;-webkit-tap-highlight-color:transparent}
+.drop-item:active{background:var(--border)}
+.drop-divider{height:1px;background:var(--border)}
 
-.content { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+/* Tabs */
+.tabs{display:flex;background:var(--bg);border-bottom:1px solid var(--border);flex-shrink:0}
+.tab{flex:1;padding:12px;text-align:center;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;font-family:inherit;background:none;border-top:none;border-left:none;border-right:none;-webkit-tap-highlight-color:transparent}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
 
-/* ── Input page ── */
-.input-page { padding: 20px 16px 100px; }
-.field { margin-bottom: 12px; }
-.field-label { font-size: 11px; font-weight: 500; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 6px; padding-left: 2px; }
-.field select, .field input { width: 100%; background: var(--input-bg); border: 1px solid var(--border); border-radius: 12px; color: var(--text); font-size: 16px; font-family: inherit; padding: 14px 16px; outline: none; appearance: none; -webkit-appearance: none; transition: border-color 0.2s; }
-.field select:focus, .field input:focus { border-color: var(--accent); }
-.field input::placeholder { color: var(--muted); }
-.select-wrap { position: relative; }
-.select-wrap::after { content: '▾'; position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; font-size: 14px; }
-.amount-wrap { position: relative; }
-.amount-wrap::before { content: 'NT$'; position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 13px; font-weight: 500; pointer-events: none; }
-.amount-wrap input { padding-left: 52px; font-size: 20px; font-weight: 700; }
+/* Content */
+.content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.page{padding:20px 16px 100px}
 
-.submit-btn { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; padding: 24px 16px 32px; background: linear-gradient(to top, var(--bg) 60%, transparent); }
-.submit-btn button { width: 100%; background: var(--accent); color: #0d0f14; border: none; border-radius: 14px; padding: 17px; font-size: 16px; font-weight: 700; font-family: inherit; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.15s; }
-.submit-btn button:active { transform: scale(0.97); opacity: 0.9; }
-.submit-btn button.success { background: #22c55e; }
+/* Fields */
+.field{margin-bottom:12px}
+.field-label{font-size:11px;font-weight:500;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px;padding-left:2px}
+.field select,.field input{width:100%;background:var(--input-bg);border:1px solid var(--border);border-radius:12px;color:var(--text);font-size:16px;font-family:inherit;padding:14px 16px;outline:none;-webkit-appearance:none;appearance:none}
+.field select:focus,.field input:focus{border-color:var(--accent)}
+.field input::placeholder{color:var(--muted)}
+.sel-wrap{position:relative}
+.sel-wrap::after{content:'▾';position:absolute;right:16px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
+.amt-wrap{position:relative}
+.amt-wrap::before{content:'NT$';position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:13px;font-weight:500;pointer-events:none}
+.amt-wrap input{padding-left:52px;font-size:20px;font-weight:700}
 
-/* ── Records page ── */
-.records-page { padding: 12px 16px 80px; }
-.records-header { display: flex; justify-content: space-between; align-items: center; padding: 4px 0 12px; }
-.records-count { font-size: 12px; color: var(--muted); }
+/* Submit */
+.submit-area{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;padding:24px 16px 36px;background:linear-gradient(to top,var(--bg) 60%,transparent)}
+.submit-btn{width:100%;background:var(--accent);color:#0d0f14;border:none;border-radius:14px;padding:17px;font-size:16px;font-weight:700;font-family:inherit;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;-webkit-tap-highlight-color:transparent}
+.submit-btn:active{opacity:.85}
+.submit-btn.ok{background:#22c55e}
 
-.empty-state { text-align: center; padding: 80px 20px; color: var(--muted); }
-.empty-icon { font-size: 48px; margin-bottom: 12px; opacity: 0.4; }
-.empty-state p { font-size: 14px; }
+/* Records */
+.rec-header{display:flex;justify-content:space-between;align-items:center;padding:4px 0 12px}
+.rec-count{font-size:12px;color:var(--muted)}
+.empty{text-align:center;padding:80px 20px;color:var(--muted)}
+.empty-icon{font-size:48px;margin-bottom:12px;opacity:.4}
+.date-group{margin-bottom:20px}
+.date-label{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.08em;padding:0 4px 8px;border-bottom:1px solid var(--border);margin-bottom:8px;display:flex;justify-content:space-between}
+.date-label span{color:var(--accent);font-weight:600}
+.rec-item{display:flex;align-items:center;gap:12px;padding:12px;background:var(--surface);border-radius:12px;margin-bottom:8px;border:1px solid var(--border);cursor:pointer;-webkit-tap-highlight-color:transparent}
+.rec-item:active{border-color:var(--accent)}
+.rec-icon{width:40px;height:40px;border-radius:10px;background:var(--accent-dim);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.rec-info{flex:1;min-width:0}
+.rec-name{font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rec-meta{font-size:12px;color:var(--muted);margin-top:2px}
+.rec-amt{font-size:16px;font-weight:700;white-space:nowrap}
+.rec-arr{font-size:12px;color:var(--muted);margin-left:2px}
 
-.date-group { margin-bottom: 20px; }
-.date-label { font-size: 11px; font-weight: 700; color: var(--muted); letter-spacing: 0.08em; padding: 0 4px 8px; border-bottom: 1px solid var(--border); margin-bottom: 8px; display: flex; justify-content: space-between; }
-.date-label span { color: var(--accent); font-weight: 600; }
+/* Modal */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:1000;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s}
+.overlay.open{opacity:1;pointer-events:all}
+.modal{background:var(--surface);border-radius:20px 20px 0 0;width:100%;max-width:480px;padding:20px 16px 44px;transform:translateY(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);border-top:1px solid var(--border)}
+.overlay.open .modal{transform:translateY(0)}
+.modal-handle{width:36px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 18px}
+.modal-title{font-size:13px;font-weight:700;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:14px}
+.modal .field select,.modal .field input{font-size:15px;padding:12px 14px}
+.modal .sel-wrap::after{right:14px}
+.modal .amt-wrap::before{left:14px;font-size:12px}
+.modal .amt-wrap input{padding-left:46px;font-size:18px}
+.modal-actions{display:flex;gap:10px;margin-top:14px}
+.btn-save{flex:1;background:var(--accent);color:#0d0f14;border:none;border-radius:12px;padding:14px;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.btn-del{background:rgba(248,113,113,.12);color:var(--danger);border:1px solid rgba(248,113,113,.2);border-radius:12px;padding:14px 18px;font-size:15px;font-family:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
 
-.record-item { display: flex; align-items: center; gap: 12px; padding: 12px; background: var(--surface); border-radius: 12px; margin-bottom: 8px; border: 1px solid var(--border); cursor: pointer; transition: border-color 0.15s; animation: slideIn 0.2s ease; }
-.record-item:active { border-color: var(--accent); }
-@keyframes slideIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
-.record-cat { width: 40px; height: 40px; border-radius: 10px; background: var(--accent-dim); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
-.record-info { flex: 1; min-width: 0; }
-.record-item-name { font-size: 14px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.record-meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
-.record-amount { font-size: 16px; font-weight: 700; white-space: nowrap; }
-.record-edit-hint { font-size: 10px; color: var(--muted); opacity: 0.5; margin-left: 4px; }
-
-/* ── Modal (edit/delete) ── */
-.modal-overlay { position: fixed; inset: 0; background: var(--overlay); z-index: 100; display: flex; align-items: flex-end; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.25s; }
-.modal-overlay.open { opacity: 1; pointer-events: all; }
-.modal { background: var(--surface); border-radius: 20px 20px 0 0; width: 100%; max-width: 480px; padding: 20px 16px 40px; transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.4,0,0.2,1); border-top: 1px solid var(--border); }
-.modal-overlay.open .modal { transform: translateY(0); }
-.modal-handle { width: 36px; height: 4px; background: var(--border); border-radius: 2px; margin: 0 auto 20px; }
-.modal-title { font-size: 13px; font-weight: 700; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 16px; }
-.modal .field { margin-bottom: 10px; }
-.modal .field select, .modal .field input { background: var(--input-bg); border: 1px solid var(--border); border-radius: 12px; color: var(--text); font-size: 15px; font-family: inherit; padding: 12px 14px; outline: none; appearance: none; -webkit-appearance: none; width: 100%; }
-.modal .field select:focus, .modal .field input:focus { border-color: var(--accent); }
-.modal .select-wrap::after { content: '▾'; position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; font-size: 14px; }
-.modal .amount-wrap::before { content: 'NT$'; position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 12px; font-weight: 500; pointer-events: none; }
-.modal .amount-wrap input { padding-left: 48px; font-size: 18px; font-weight: 700; }
-.modal-actions { display: flex; gap: 10px; margin-top: 16px; }
-.btn-save { flex: 1; background: var(--accent); color: #0d0f14; border: none; border-radius: 12px; padding: 14px; font-size: 15px; font-weight: 700; font-family: inherit; cursor: pointer; }
-.btn-save:active { opacity: 0.85; }
-.btn-delete { background: rgba(248,113,113,0.12); color: var(--danger); border: 1px solid rgba(248,113,113,0.2); border-radius: 12px; padding: 14px 18px; font-size: 15px; font-family: inherit; cursor: pointer; }
-.btn-delete:active { background: rgba(248,113,113,0.25); }
-
-/* ── Toast ── */
-.toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--surface2); border: 1px solid var(--accent); color: var(--accent); padding: 10px 20px; border-radius: 20px; font-size: 13px; font-weight: 500; opacity: 0; transition: all 0.3s; pointer-events: none; white-space: nowrap; z-index: 999; }
-.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+/* Toast */
+.toast{position:fixed;bottom:110px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--surface2);border:1px solid var(--accent);color:var(--accent);padding:10px 20px;border-radius:20px;font-size:13px;font-weight:500;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap;z-index:9998}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 </style>
 </head>
 <body>
-
 <div class="app">
+
+  <!-- Header -->
   <div class="header">
-    <div class="header-top">
-      <h1>💰 <span>記帳本</span> <small style="font-size:11px;font-weight:400;color:var(--muted);letter-spacing:0">v0.00</small></h1>
-      <button class="menu-btn" onclick="toggleMenu()">
+    <div class="header-row">
+      <h1>💰 <span>記帳本</span><span class="ver">v0.00</span></h1>
+      <button class="menu-btn" id="menu-btn">
         <span></span><span></span><span></span>
       </button>
-      <input type="file" id="csv-import" accept=".csv" style="display:none" onchange="importCSV(event)">
     </div>
   </div>
-  <!-- Dropdown menu -->
-  <div class="dropdown" id="dropdown">
-    <button class="dropdown-item" onclick="document.getElementById('csv-import').click();closeMenu()">
-      <span>📥</span> 匯入 CSV
-    </button>
-    <div class="dropdown-divider"></div>
-    <button class="dropdown-item" onclick="exportCSV();closeMenu()">
-      <span>📤</span> 匯出 CSV
-    </button>
-  </div>
 
+  <!-- Dropdown -->
+  <div class="dropdown" id="dropdown">
+    <button class="drop-item" id="btn-import">📥 匯入 CSV</button>
+    <div class="drop-divider"></div>
+    <button class="drop-item" id="btn-export">📤 匯出 CSV</button>
+  </div>
+  <input type="file" id="csv-file" accept=".csv" style="display:none">
+
+  <!-- Tabs -->
   <div class="tabs">
-    <button class="tab active" onclick="showTab('input')">＋ 記帳</button>
-    <button class="tab" onclick="showTab('records')">📋 紀錄</button>
+    <button class="tab active" id="tab-input">＋ 記帳</button>
+    <button class="tab" id="tab-records">📋 紀錄</button>
   </div>
 
   <div class="content">
 
-    <!-- Input Tab -->
-    <div id="input-tab" class="input-page">
+    <!-- Input page -->
+    <div class="page" id="page-input">
       <div class="field">
         <div class="field-label">日期</div>
-        <div class="select-wrap"><select id="date-select"></select></div>
+        <div class="sel-wrap"><select id="f-date"></select></div>
       </div>
       <div class="field">
         <div class="field-label">類別</div>
-        <div class="select-wrap">
-          <select id="cat-select">
-            <option>飲食</option><option>住房</option><option>交通</option>
-            <option>娛樂</option><option>醫療</option><option>其他</option>
+        <div class="sel-wrap">
+          <select id="f-cat">
+            <option>飲食</option>
+            <option>住房</option>
+            <option>交通</option>
+            <option>娛樂</option>
+            <option>醫療</option>
+            <option>其他</option>
           </select>
         </div>
       </div>
       <div class="field">
         <div class="field-label">金額</div>
-        <div class="amount-wrap"><input type="number" id="amount-input" placeholder="0" inputmode="numeric"></div>
+        <div class="amt-wrap"><input type="number" id="f-amount" placeholder="0" inputmode="numeric"></div>
       </div>
       <div class="field">
         <div class="field-label">品項說明</div>
-        <input type="text" id="item-input" placeholder="例：午餐便當">
+        <input type="text" id="f-item" placeholder="例：午餐便當">
       </div>
       <div class="field">
         <div class="field-label">備註（選填）</div>
-        <input type="text" id="note-input" placeholder="選填">
+        <input type="text" id="f-note" placeholder="選填">
       </div>
     </div>
 
-    <!-- Records Tab -->
-    <div id="records-tab" class="records-page" style="display:none">
-      <div class="records-header">
-        <div class="records-count" id="records-count">共 0 筆</div>
+    <!-- Records page -->
+    <div class="page" id="page-records" style="display:none">
+      <div class="rec-header">
+        <div class="rec-count" id="rec-count">共 0 筆</div>
       </div>
-      <div id="records-list"></div>
+      <div id="rec-list"></div>
     </div>
 
   </div>
 
-  <div class="submit-btn" id="submit-area">
-    <button onclick="addRecord()" id="submit-btn">
-      <span>✓</span> 完成記帳
-    </button>
+  <!-- Submit button -->
+  <div class="submit-area" id="submit-area">
+    <button class="submit-btn" id="submit-btn">✓ 完成記帳</button>
   </div>
+
 </div>
 
 <!-- Edit Modal -->
-<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+<div class="overlay" id="overlay">
   <div class="modal">
     <div class="modal-handle"></div>
     <div class="modal-title">編輯記帳</div>
-    <input type="hidden" id="edit-id">
-
+    <input type="hidden" id="e-id">
     <div class="field">
       <div class="field-label">日期</div>
-      <div class="select-wrap"><select id="edit-date"></select></div>
+      <div class="sel-wrap"><select id="e-date"></select></div>
     </div>
     <div class="field">
       <div class="field-label">類別</div>
-      <div class="select-wrap">
-        <select id="edit-cat">
-          <option>飲食</option><option>住房</option><option>交通</option>
-          <option>娛樂</option><option>醫療</option><option>其他</option>
+      <div class="sel-wrap">
+        <select id="e-cat">
+          <option>飲食</option>
+          <option>住房</option>
+          <option>交通</option>
+          <option>娛樂</option>
+          <option>醫療</option>
+          <option>其他</option>
         </select>
       </div>
     </div>
     <div class="field">
       <div class="field-label">金額</div>
-      <div class="amount-wrap"><input type="number" id="edit-amount" inputmode="numeric"></div>
+      <div class="amt-wrap"><input type="number" id="e-amount" inputmode="numeric"></div>
     </div>
     <div class="field">
       <div class="field-label">品項說明</div>
-      <input type="text" id="edit-item">
+      <input type="text" id="e-item">
     </div>
     <div class="field">
       <div class="field-label">備註</div>
-      <input type="text" id="edit-note" placeholder="選填">
+      <input type="text" id="e-note" placeholder="選填">
     </div>
-
     <div class="modal-actions">
-      <button class="btn-delete" onclick="deleteRecord()">刪除</button>
-      <button class="btn-save" onclick="saveEdit()">儲存修改</button>
+      <button class="btn-del" id="btn-del">刪除</button>
+      <button class="btn-save" id="btn-save">儲存修改</button>
     </div>
   </div>
 </div>
@@ -235,247 +227,208 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 <div class="toast" id="toast"></div>
 
 <script>
-const CAT_ICON = {
-  '飲食':'🍱','住房':'🏠','交通':'🚌',
-  '娛樂':'🎬','醫療':'💊','其他':'📦'
-};
+var ICONS = {飲食:'🍱',住房:'🏠',交通:'🚌',娛樂:'🎬',醫療:'💊',其他:'📦'};
 
-function formatDate(d) {
-  const y = d.getFullYear();
-  const m = String(d.getMonth()+1).padStart(2,'0');
-  const dd = String(d.getDate()).padStart(2,'0');
-  return y+'/'+m+'/'+dd;
+/* ── Helpers ── */
+function fmtDate(d){
+  return d.getFullYear()+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+String(d.getDate()).padStart(2,'0');
+}
+function getRecords(){ try{return JSON.parse(localStorage.getItem('rec')||'[]')}catch(e){return[]} }
+function setRecords(r){ localStorage.setItem('rec',JSON.stringify(r)) }
+function toast(msg){
+  var t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(function(){t.classList.remove('show')},2200);
 }
 
-function buildDateOptions(selectEl, selectedVal) {
-  const today = new Date();
-  selectEl.innerHTML = '';
-  for (let i = 0; i < 30; i++) {
-    const d = new Date(today);
-    d.setDate(today.getDate() - i);
-    const str = formatDate(d);
-    const opt = document.createElement('option');
-    opt.value = str;
-    opt.textContent = i === 0 ? '今天  ' + str : str;
-    if (selectedVal && str === selectedVal) opt.selected = true;
-    selectEl.appendChild(opt);
+/* ── Build date select ── */
+function buildDates(sel, picked){
+  sel.innerHTML='';
+  var today=new Date();
+  for(var i=0;i<30;i++){
+    var d=new Date(today); d.setDate(today.getDate()-i);
+    var s=fmtDate(d);
+    var o=document.createElement('option');
+    o.value=s; o.textContent=i===0?'今天  '+s:s;
+    if(picked && s===picked) o.selected=true;
+    sel.appendChild(o);
   }
 }
 
-function getRecords() {
-  try { return JSON.parse(localStorage.getItem('records') || '[]'); }
-  catch(e) { return []; }
-}
-function saveRecords(r) { localStorage.setItem('records', JSON.stringify(r)); }
-
-// ── Add ──
-function addRecord() {
-  const date   = document.getElementById('date-select').value;
-  const cat    = document.getElementById('cat-select').value;
-  const amount = parseFloat(document.getElementById('amount-input').value);
-  const item   = document.getElementById('item-input').value.trim();
-  const note   = document.getElementById('note-input').value.trim();
-
-  if (!amount || amount <= 0) { showToast('⚠️ 請輸入金額'); return; }
-  if (!item) { showToast('⚠️ 請填寫品項說明'); return; }
-
-  const records = getRecords();
-  records.unshift({ id: Date.now(), date, cat, amount, item, note });
-  saveRecords(records);
-
-  document.getElementById('amount-input').value = '';
-  document.getElementById('item-input').value = '';
-  document.getElementById('note-input').value = '';
-
-  const btn = document.getElementById('submit-btn');
-  btn.classList.add('success');
-  btn.innerHTML = '<span>✓</span> 已記錄！';
-  setTimeout(() => { btn.classList.remove('success'); btn.innerHTML = '<span>✓</span> 完成記帳'; }, 1500);
-  showToast('✅ ' + cat + '  NT$ ' + amount.toLocaleString());
-}
-
-// ── Edit modal ──
-function openEdit(id) {
-  const records = getRecords();
-  const r = records.find(x => x.id === id);
-  if (!r) return;
-
-  document.getElementById('edit-id').value = id;
-  buildDateOptions(document.getElementById('edit-date'), r.date);
-  document.getElementById('edit-cat').value = r.cat;
-  document.getElementById('edit-amount').value = r.amount;
-  document.getElementById('edit-item').value = r.item;
-  document.getElementById('edit-note').value = r.note || '';
-
-  document.getElementById('modal-overlay').classList.add('open');
-}
-
-function closeModal(e) {
-  if (e && e.target !== document.getElementById('modal-overlay')) return;
-  document.getElementById('modal-overlay').classList.remove('open');
-}
-
-function saveEdit() {
-  const id     = parseInt(document.getElementById('edit-id').value);
-  const date   = document.getElementById('edit-date').value;
-  const cat    = document.getElementById('edit-cat').value;
-  const amount = parseFloat(document.getElementById('edit-amount').value);
-  const item   = document.getElementById('edit-item').value.trim();
-  const note   = document.getElementById('edit-note').value.trim();
-
-  if (!amount || amount <= 0) { showToast('⚠️ 請輸入金額'); return; }
-  if (!item) { showToast('⚠️ 請填寫品項說明'); return; }
-
-  const records = getRecords().map(r => r.id === id ? { id, date, cat, amount, item, note } : r);
-  saveRecords(records);
-  document.getElementById('modal-overlay').classList.remove('open');
+/* ── Tabs ── */
+document.getElementById('tab-input').addEventListener('click', function(){
+  document.getElementById('page-input').style.display='block';
+  document.getElementById('page-records').style.display='none';
+  document.getElementById('submit-area').style.display='block';
+  document.getElementById('tab-input').classList.add('active');
+  document.getElementById('tab-records').classList.remove('active');
+});
+document.getElementById('tab-records').addEventListener('click', function(){
+  document.getElementById('page-input').style.display='none';
+  document.getElementById('page-records').style.display='block';
+  document.getElementById('submit-area').style.display='none';
+  document.getElementById('tab-input').classList.remove('active');
+  document.getElementById('tab-records').classList.add('active');
   renderRecords();
-  showToast('✅ 已儲存修改');
-}
-
-function deleteRecord() {
-  const id = parseInt(document.getElementById('edit-id').value);
-  if (!confirm('確定要刪除這筆記錄？')) return;
-  const records = getRecords().filter(r => r.id !== id);
-  saveRecords(records);
-  document.getElementById('modal-overlay').classList.remove('open');
-  renderRecords();
-  showToast('已刪除');
-}
-
-// ── Render ──
-function renderRecords() {
-  const records = getRecords();
-  const list = document.getElementById('records-list');
-  document.getElementById('records-count').textContent = '共 ' + records.length + ' 筆';
-
-  if (records.length === 0) {
-    list.innerHTML = '<div class="empty-state"><div class="empty-icon">📭</div><p>還沒有記帳紀錄</p></div>';
-    return;
-  }
-
-  const groups = {};
-  records.forEach(r => { if (!groups[r.date]) groups[r.date] = []; groups[r.date].push(r); });
-
-  list.innerHTML = Object.keys(groups).map(date => {
-    const dayTotal = groups[date].reduce((s,r) => s + r.amount, 0);
-    const items = groups[date].map(r => `
-      <div class="record-item" onclick="openEdit(${r.id})">
-        <div class="record-cat">${CAT_ICON[r.cat] || '📦'}</div>
-        <div class="record-info">
-          <div class="record-item-name">${r.item}</div>
-          <div class="record-meta">${r.cat}${r.note ? '・' + r.note : ''}</div>
-        </div>
-        <div class="record-amount">NT$ ${r.amount.toLocaleString()}</div>
-        <span class="record-edit-hint">›</span>
-      </div>
-    `).join('');
-    return `
-      <div class="date-group">
-        <div class="date-label">${date} <span>NT$ ${dayTotal.toLocaleString()}</span></div>
-        ${items}
-      </div>
-    `;
-  }).join('');
-}
-
-// ── Tabs ──
-function showTab(tab) {
-  document.getElementById('input-tab').style.display   = tab === 'input'   ? 'block' : 'none';
-  document.getElementById('records-tab').style.display = tab === 'records' ? 'block' : 'none';
-  document.getElementById('submit-area').style.display = tab === 'input'   ? 'block' : 'none';
-  document.querySelectorAll('.tab').forEach((t,i) => {
-    t.classList.toggle('active', (i===0 && tab==='input') || (i===1 && tab==='records'));
-  });
-  if (tab === 'records') renderRecords();
-}
-
-// ── Export CSV ──
-function exportCSV() {
-  const records = getRecords();
-  if (records.length === 0) { showToast('沒有資料可匯出'); return; }
-  const rows = [['日期','類別','金額','品項說明','備註']];
-  records.forEach(r => rows.push([r.date, r.cat, r.amount, r.item, r.note || '']));
-  const csv = '\uFEFF' + rows.map(r => r.map(v => '"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');
-  const blob = new Blob([csv], { type: 'text/csv' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = '記帳紀錄_' + formatDate(new Date()) + '.csv';
-  a.click();
-  showToast('✅ CSV 已匯出，資料不受影響');
-}
-
-
-// ── Menu ──
-function toggleMenu() {
-  const d = document.getElementById('dropdown');
-  d.classList.toggle('open');
-}
-function closeMenu() {
-  document.getElementById('dropdown').classList.remove('open');
-}
-document.addEventListener('click', function(e) {
-  if (!e.target.closest('.menu-btn') && !e.target.closest('.dropdown')) {
-    closeMenu();
-  }
 });
 
-// ── Import CSV ──
-function importCSV(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    try {
-      const text = e.target.result.replace(/^﻿/, '');
-      const lines = text.trim().split('
-');
-      if (lines.length < 2) { showToast('⚠️ CSV 檔案沒有資料'); return; }
+/* ── Menu ── */
+document.getElementById('menu-btn').addEventListener('click', function(e){
+  e.stopPropagation();
+  var d=document.getElementById('dropdown');
+  d.classList.toggle('open');
+});
+document.addEventListener('click', function(){
+  document.getElementById('dropdown').classList.remove('open');
+});
+document.getElementById('btn-export').addEventListener('click', function(){
+  document.getElementById('dropdown').classList.remove('open');
+  exportCSV();
+});
+document.getElementById('btn-import').addEventListener('click', function(){
+  document.getElementById('dropdown').classList.remove('open');
+  document.getElementById('csv-file').click();
+});
+document.getElementById('csv-file').addEventListener('change', importCSV);
 
-      // Skip header row, parse data
-      const imported = [];
-      for (let i = 1; i < lines.length; i++) {
-        const cols = lines[i].match(/"([^"]*)"/g);
-        if (!cols || cols.length < 4) continue;
-        const clean = cols.map(c => c.replace(/^"|"$/g, '').replace(/""/g, '"'));
-        const amount = parseFloat(clean[2]);
-        if (!clean[0] || !clean[1] || isNaN(amount)) continue;
-        imported.push({
-          id: Date.now() + i,
-          date: clean[0],
-          cat: clean[1],
-          amount: amount,
-          item: clean[3] || '',
-          note: clean[4] || ''
-        });
+/* ── Add record ── */
+document.getElementById('submit-btn').addEventListener('click', function(){
+  var date=document.getElementById('f-date').value;
+  var cat=document.getElementById('f-cat').value;
+  var amount=parseFloat(document.getElementById('f-amount').value);
+  var item=document.getElementById('f-item').value.trim();
+  var note=document.getElementById('f-note').value.trim();
+  if(!amount||amount<=0){toast('⚠️ 請輸入金額');return}
+  if(!item){toast('⚠️ 請填寫品項說明');return}
+  var r=getRecords();
+  r.unshift({id:Date.now(),date:date,cat:cat,amount:amount,item:item,note:note});
+  setRecords(r);
+  document.getElementById('f-amount').value='';
+  document.getElementById('f-item').value='';
+  document.getElementById('f-note').value='';
+  var btn=document.getElementById('submit-btn');
+  btn.textContent='✓ 已記錄！'; btn.classList.add('ok');
+  setTimeout(function(){btn.textContent='✓ 完成記帳';btn.classList.remove('ok')},1500);
+  toast('✅ '+cat+'  NT$ '+amount.toLocaleString());
+});
+
+/* ── Render records ── */
+function renderRecords(){
+  var records=getRecords();
+  document.getElementById('rec-count').textContent='共 '+records.length+' 筆';
+  var list=document.getElementById('rec-list');
+  if(records.length===0){
+    list.innerHTML='<div class="empty"><div class="empty-icon">📭</div><p>還沒有記帳紀錄</p></div>';
+    return;
+  }
+  var groups={};
+  records.forEach(function(r){if(!groups[r.date])groups[r.date]=[];groups[r.date].push(r)});
+  var html='';
+  Object.keys(groups).forEach(function(date){
+    var dayTotal=groups[date].reduce(function(s,r){return s+r.amount},0);
+    html+='<div class="date-group"><div class="date-label">'+date+' <span>NT$ '+dayTotal.toLocaleString()+'</span></div>';
+    groups[date].forEach(function(r){
+      html+='<div class="rec-item" data-id="'+r.id+'">'
+        +'<div class="rec-icon">'+(ICONS[r.cat]||'📦')+'</div>'
+        +'<div class="rec-info"><div class="rec-name">'+r.item+'</div>'
+        +'<div class="rec-meta">'+r.cat+(r.note?'・'+r.note:'')+'</div></div>'
+        +'<div class="rec-amt">NT$ '+r.amount.toLocaleString()+'</div>'
+        +'<span class="rec-arr">›</span></div>';
+    });
+    html+='</div>';
+  });
+  list.innerHTML=html;
+  list.querySelectorAll('.rec-item').forEach(function(el){
+    el.addEventListener('click', function(){openEdit(parseInt(el.dataset.id))});
+  });
+}
+
+/* ── Edit modal ── */
+function openEdit(id){
+  var r=getRecords().find(function(x){return x.id===id});
+  if(!r)return;
+  document.getElementById('e-id').value=id;
+  buildDates(document.getElementById('e-date'), r.date);
+  document.getElementById('e-cat').value=r.cat;
+  document.getElementById('e-amount').value=r.amount;
+  document.getElementById('e-item').value=r.item;
+  document.getElementById('e-note').value=r.note||'';
+  document.getElementById('overlay').classList.add('open');
+}
+document.getElementById('overlay').addEventListener('click', function(e){
+  if(e.target===this) this.classList.remove('open');
+});
+document.getElementById('btn-save').addEventListener('click', function(){
+  var id=parseInt(document.getElementById('e-id').value);
+  var date=document.getElementById('e-date').value;
+  var cat=document.getElementById('e-cat').value;
+  var amount=parseFloat(document.getElementById('e-amount').value);
+  var item=document.getElementById('e-item').value.trim();
+  var note=document.getElementById('e-note').value.trim();
+  if(!amount||amount<=0){toast('⚠️ 請輸入金額');return}
+  if(!item){toast('⚠️ 請填寫品項說明');return}
+  var records=getRecords().map(function(r){
+    return r.id===id?{id:id,date:date,cat:cat,amount:amount,item:item,note:note}:r;
+  });
+  setRecords(records);
+  document.getElementById('overlay').classList.remove('open');
+  renderRecords();
+  toast('✅ 已儲存修改');
+});
+document.getElementById('btn-del').addEventListener('click', function(){
+  if(!confirm('確定要刪除這筆記錄？'))return;
+  var id=parseInt(document.getElementById('e-id').value);
+  setRecords(getRecords().filter(function(r){return r.id!==id}));
+  document.getElementById('overlay').classList.remove('open');
+  renderRecords();
+  toast('已刪除');
+});
+
+/* ── Export CSV ── */
+function exportCSV(){
+  var records=getRecords();
+  if(records.length===0){toast('沒有資料可匯出');return}
+  var rows=[['日期','類別','金額','品項說明','備註']];
+  records.forEach(function(r){rows.push([r.date,r.cat,r.amount,r.item,r.note||''])});
+  var csv='\uFEFF'+rows.map(function(r){return r.map(function(v){return '"'+String(v).replace(/"/g,'""')+'"'}).join(',')}).join('\n');
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
+  a.download='記帳紀錄_'+fmtDate(new Date())+'.csv';
+  a.click();
+  toast('✅ CSV 已匯出');
+}
+
+/* ── Import CSV ── */
+function importCSV(e){
+  var file=e.target.files[0]; if(!file)return;
+  var reader=new FileReader();
+  reader.onload=function(ev){
+    try{
+      var text=ev.target.result.replace(/^\uFEFF/,'');
+      var lines=text.trim().split('\n');
+      if(lines.length<2){toast('⚠️ 沒有資料');return}
+      var imported=[];
+      for(var i=1;i<lines.length;i++){
+        var cols=lines[i].match(/"([^"]*)"/g);
+        if(!cols||cols.length<4)continue;
+        var c=cols.map(function(x){return x.replace(/^"|"$/g,'').replace(/""/g,'"')});
+        var amt=parseFloat(c[2]);
+        if(!c[0]||isNaN(amt))continue;
+        imported.push({id:Date.now()+i,date:c[0],cat:c[1],amount:amt,item:c[3]||'',note:c[4]||''});
       }
-
-      if (imported.length === 0) { showToast('⚠️ 找不到有效資料'); return; }
-
-      if (!confirm('匯入 ' + imported.length + ' 筆資料？
-這會取代目前所有紀錄。')) return;
-
-      saveRecords(imported);
-      showToast('✅ 已匯入 ' + imported.length + ' 筆資料');
-      document.getElementById('csv-import').value = '';
-    } catch(err) {
-      showToast('⚠️ 匯入失敗，請確認檔案格式');
-    }
+      if(imported.length===0){toast('⚠️ 找不到有效資料');return}
+      if(!confirm('匯入 '+imported.length+' 筆資料？\n這會取代目前所有紀錄。'))return;
+      setRecords(imported);
+      toast('✅ 已匯入 '+imported.length+' 筆資料');
+      document.getElementById('csv-file').value='';
+    }catch(err){toast('⚠️ 匯入失敗')}
   };
-  reader.readAsText(file, 'UTF-8');
+  reader.readAsText(file,'UTF-8');
 }
 
-// ── Toast ──
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2200);
-}
-
-// ── Init ──
-buildDateOptions(document.getElementById('date-select'), null);
-if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+/* ── Init ── */
+buildDates(document.getElementById('f-date'), null);
+if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(function(){});
 </script>
 </body>
 </html>
