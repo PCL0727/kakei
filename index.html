@@ -323,8 +323,11 @@ function renderRecords(){
   }
   var groups={};
   records.forEach(function(r){if(!groups[r.date])groups[r.date]=[];groups[r.date].push(r)});
+  // 日期新到舊，同日期依輸入順序（id小=先輸入）
+  var sortedDates=Object.keys(groups).sort(function(a,b){return b>a?1:-1});
+  sortedDates.forEach(function(date){groups[date].sort(function(a,b){return a.id-b.id})});
   var html='';
-  Object.keys(groups).forEach(function(date){
+  sortedDates.forEach(function(date){
     var dayTotal=groups[date].reduce(function(s,r){return s+r.amount},0);
     html+='<div class="date-group"><div class="date-label">'+date+' <span>NT$ '+dayTotal.toLocaleString()+'</span></div>';
     groups[date].forEach(function(r){
