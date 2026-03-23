@@ -17,38 +17,27 @@ html,body{height:100%;background:#0d0f14;color:#e8eaf2;font-family:'Noto Sans TC
   --accent:#4ade80;--accent-dim:rgba(74,222,128,0.12);
   --text:#e8eaf2;--muted:#6b7090;--danger:#f87171;--input-bg:#1a1d2a;
 }
-
-/* Layout */
 .app{display:flex;flex-direction:column;height:100vh;max-width:480px;margin:0 auto}
-
-/* Header */
 .header{padding:52px 20px 14px;background:var(--bg);border-bottom:1px solid var(--border);flex-shrink:0}
 .header-row{display:flex;justify-content:space-between;align-items:center}
 .header h1{font-size:22px;font-weight:700;letter-spacing:-0.5px}
 .header h1 span{color:var(--accent)}
 .ver{font-size:11px;font-weight:400;color:var(--muted);margin-left:6px}
-
-/* Hamburger */
-.menu-btn{background:none;border:none;cursor:pointer;padding:8px;display:flex;flex-direction:column;gap:5px;-webkit-tap-highlight-color:transparent}
+.file-status{font-size:11px;color:var(--muted);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.file-status.ok{color:var(--accent)}
+.file-status.warn{color:#f7a24f}
+.menu-btn{background:none;border:none;cursor:pointer;padding:8px;display:flex;flex-direction:column;gap:5px}
 .menu-btn span{display:block;width:22px;height:2px;background:var(--muted);border-radius:2px}
-
-/* Dropdown */
-.dropdown{position:fixed;top:80px;right:16px;background:var(--surface2);border:1px solid var(--border);border-radius:14px;min-width:160px;z-index:9999;overflow:hidden;display:none}
+.dropdown{position:fixed;top:80px;right:16px;background:var(--surface2);border:1px solid var(--border);border-radius:14px;min-width:180px;z-index:9999;overflow:hidden;display:none}
 .dropdown.open{display:block}
-.drop-item{width:100%;background:none;border:none;color:var(--text);font-family:inherit;font-size:14px;padding:14px 18px;text-align:left;cursor:pointer;display:flex;align-items:center;gap:10px;-webkit-tap-highlight-color:transparent}
+.drop-item{width:100%;background:none;border:none;color:var(--text);font-family:inherit;font-size:14px;padding:14px 18px;text-align:left;cursor:pointer;display:flex;align-items:center;gap:10px}
 .drop-item:active{background:var(--border)}
 .drop-divider{height:1px;background:var(--border)}
-
-/* Tabs */
 .tabs{display:flex;background:var(--bg);border-bottom:1px solid var(--border);flex-shrink:0}
-.tab{flex:1;padding:12px;text-align:center;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;font-family:inherit;background:none;border-top:none;border-left:none;border-right:none;-webkit-tap-highlight-color:transparent}
+.tab{flex:1;padding:12px;text-align:center;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;font-family:inherit;background:none;border-top:none;border-left:none;border-right:none}
 .tab.active{color:var(--accent);border-bottom-color:var(--accent)}
-
-/* Content */
 .content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .page{padding:20px 16px 100px}
-
-/* Fields */
 .field{margin-bottom:12px}
 .field-label{font-size:11px;font-weight:500;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px;padding-left:2px}
 .field select,.field input{width:100%;background:var(--input-bg);border:1px solid var(--border);border-radius:12px;color:var(--text);font-size:16px;font-family:inherit;padding:14px 16px;outline:none;-webkit-appearance:none;appearance:none}
@@ -59,22 +48,20 @@ html,body{height:100%;background:#0d0f14;color:#e8eaf2;font-family:'Noto Sans TC
 .amt-wrap{position:relative}
 .amt-wrap::before{content:'NT$';position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:13px;font-weight:500;pointer-events:none}
 .amt-wrap input{padding-left:52px;font-size:20px;font-weight:700}
-
-/* Submit */
 .submit-area{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;padding:24px 16px 36px;background:linear-gradient(to top,var(--bg) 60%,transparent)}
-.submit-btn{width:100%;background:var(--accent);color:#0d0f14;border:none;border-radius:14px;padding:17px;font-size:16px;font-weight:700;font-family:inherit;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;-webkit-tap-highlight-color:transparent}
+.submit-btn{width:100%;background:var(--accent);color:#0d0f14;border:none;border-radius:14px;padding:17px;font-size:16px;font-weight:700;font-family:inherit;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px}
 .submit-btn:active{opacity:.85}
 .submit-btn.ok{background:#22c55e}
-
-/* Records */
+.submit-btn:disabled{background:var(--border);color:var(--muted);cursor:not-allowed}
 .rec-header{display:flex;justify-content:space-between;align-items:center;padding:4px 0 12px}
 .rec-count{font-size:12px;color:var(--muted)}
-.empty{text-align:center;padding:80px 20px;color:var(--muted)}
+.empty{text-align:center;padding:60px 20px;color:var(--muted)}
 .empty-icon{font-size:48px;margin-bottom:12px;opacity:.4}
+.empty p{font-size:14px;line-height:1.8}
 .date-group{margin-bottom:20px}
 .date-label{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.08em;padding:0 4px 8px;border-bottom:1px solid var(--border);margin-bottom:8px;display:flex;justify-content:space-between}
 .date-label span{color:var(--accent);font-weight:600}
-.rec-item{display:flex;align-items:center;gap:12px;padding:12px;background:var(--surface);border-radius:12px;margin-bottom:8px;border:1px solid var(--border);cursor:pointer;-webkit-tap-highlight-color:transparent}
+.rec-item{display:flex;align-items:center;gap:12px;padding:12px;background:var(--surface);border-radius:12px;margin-bottom:8px;border:1px solid var(--border);cursor:pointer}
 .rec-item:active{border-color:var(--accent)}
 .rec-icon{width:40px;height:40px;border-radius:10px;background:var(--accent-dim);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
 .rec-info{flex:1;min-width:0}
@@ -82,8 +69,6 @@ html,body{height:100%;background:#0d0f14;color:#e8eaf2;font-family:'Noto Sans TC
 .rec-meta{font-size:12px;color:var(--muted);margin-top:2px}
 .rec-amt{font-size:16px;font-weight:700;white-space:nowrap}
 .rec-arr{font-size:12px;color:var(--muted);margin-left:2px}
-
-/* Modal */
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:1000;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s}
 .overlay.open{opacity:1;pointer-events:all}
 .modal{background:var(--surface);border-radius:20px 20px 0 0;width:100%;max-width:480px;padding:20px 16px 44px;transform:translateY(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);border-top:1px solid var(--border)}
@@ -95,44 +80,34 @@ html,body{height:100%;background:#0d0f14;color:#e8eaf2;font-family:'Noto Sans TC
 .modal .amt-wrap::before{left:14px;font-size:12px}
 .modal .amt-wrap input{padding-left:46px;font-size:18px}
 .modal-actions{display:flex;gap:10px;margin-top:14px}
-.btn-save{flex:1;background:var(--accent);color:#0d0f14;border:none;border-radius:12px;padding:14px;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
-.btn-del{background:rgba(248,113,113,.12);color:var(--danger);border:1px solid rgba(248,113,113,.2);border-radius:12px;padding:14px 18px;font-size:15px;font-family:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
-
-/* Toast */
+.btn-save{flex:1;background:var(--accent);color:#0d0f14;border:none;border-radius:12px;padding:14px;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer}
+.btn-del{background:rgba(248,113,113,.12);color:var(--danger);border:1px solid rgba(248,113,113,.2);border-radius:12px;padding:14px 18px;font-size:15px;font-family:inherit;cursor:pointer}
 .toast{position:fixed;bottom:110px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--surface2);border:1px solid var(--accent);color:var(--accent);padding:10px 20px;border-radius:20px;font-size:13px;font-weight:500;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap;z-index:9998}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 </style>
 </head>
 <body>
 <div class="app">
-
-  <!-- Header -->
   <div class="header">
     <div class="header-row">
-      <h1>💰 <span>記帳本</span><span class="ver">v0.00</span></h1>
-      <button class="menu-btn" id="menu-btn">
-        <span></span><span></span><span></span>
-      </button>
+      <h1>💰 <span>記帳本</span><span class="ver">v0.02</span></h1>
+      <button class="menu-btn" id="menu-btn"><span></span><span></span><span></span></button>
     </div>
+    <div class="file-status warn" id="file-status">⚠️ 尚未選取資料檔案</div>
   </div>
 
-  <!-- Dropdown -->
   <div class="dropdown" id="dropdown">
-    <button class="drop-item" id="btn-import">📥 匯入 CSV</button>
+    <button class="drop-item" id="btn-open">📂 開啟 / 建立資料檔案</button>
     <div class="drop-divider"></div>
-    <button class="drop-item" id="btn-export">📤 匯出 CSV</button>
+    <button class="drop-item" id="btn-sync">☁️ 同步到 Google Sheets</button>
   </div>
-  <input type="file" id="csv-file" accept=".csv" style="display:none">
 
-  <!-- Tabs -->
   <div class="tabs">
     <button class="tab active" id="tab-input">＋ 記帳</button>
     <button class="tab" id="tab-records">📋 紀錄</button>
   </div>
 
   <div class="content">
-
-    <!-- Input page -->
     <div class="page" id="page-input">
       <div class="field">
         <div class="field-label">日期</div>
@@ -142,12 +117,8 @@ html,body{height:100%;background:#0d0f14;color:#e8eaf2;font-family:'Noto Sans TC
         <div class="field-label">類別</div>
         <div class="sel-wrap">
           <select id="f-cat">
-            <option>飲食</option>
-            <option>住房</option>
-            <option>交通</option>
-            <option>娛樂</option>
-            <option>醫療</option>
-            <option>其他</option>
+            <option>飲食</option><option>住房</option><option>交通</option>
+            <option>娛樂</option><option>醫療</option><option>其他</option>
           </select>
         </div>
       </div>
@@ -165,21 +136,17 @@ html,body{height:100%;background:#0d0f14;color:#e8eaf2;font-family:'Noto Sans TC
       </div>
     </div>
 
-    <!-- Records page -->
     <div class="page" id="page-records" style="display:none">
       <div class="rec-header">
         <div class="rec-count" id="rec-count">共 0 筆</div>
       </div>
       <div id="rec-list"></div>
     </div>
-
   </div>
 
-  <!-- Submit button -->
   <div class="submit-area" id="submit-area">
     <button class="submit-btn" id="submit-btn">✓ 完成記帳</button>
   </div>
-
 </div>
 
 <!-- Edit Modal -->
@@ -196,12 +163,8 @@ html,body{height:100%;background:#0d0f14;color:#e8eaf2;font-family:'Noto Sans TC
       <div class="field-label">類別</div>
       <div class="sel-wrap">
         <select id="e-cat">
-          <option>飲食</option>
-          <option>住房</option>
-          <option>交通</option>
-          <option>娛樂</option>
-          <option>醫療</option>
-          <option>其他</option>
+          <option>飲食</option><option>住房</option><option>交通</option>
+          <option>娛樂</option><option>醫療</option><option>其他</option>
         </select>
       </div>
     </div>
@@ -228,20 +191,26 @@ html,body{height:100%;background:#0d0f14;color:#e8eaf2;font-family:'Noto Sans TC
 
 <script>
 var ICONS = {飲食:'🍱',住房:'🏠',交通:'🚌',娛樂:'🎬',醫療:'💊',其他:'📦'};
+var API = 'https://script.google.com/macros/s/AKfycbwT5jqafNVLPKIpfulNpatvPy3QuYDPK8p_MsjY_EiOLioT69MnNbjscTPwZB87yPlr/exec';
+var fileHandle = null;
+var records = [];
 
 /* ── Helpers ── */
 function fmtDate(d){
   return d.getFullYear()+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+String(d.getDate()).padStart(2,'0');
 }
-function getRecords(){ try{return JSON.parse(localStorage.getItem('rec')||'[]')}catch(e){return[]} }
-function setRecords(r){ localStorage.setItem('rec',JSON.stringify(r)) }
 function toast(msg){
   var t=document.getElementById('toast');
   t.textContent=msg; t.classList.add('show');
   setTimeout(function(){t.classList.remove('show')},2200);
 }
+function setFileStatus(name){
+  var el=document.getElementById('file-status');
+  if(name){ el.textContent='📄 '+name; el.className='file-status ok'; }
+  else { el.textContent='⚠️ 尚未選取資料檔案'; el.className='file-status warn'; }
+}
 
-/* ── Build date select ── */
+/* ── Date select ── */
 function buildDates(sel, picked){
   sel.innerHTML='';
   var today=new Date();
@@ -255,15 +224,122 @@ function buildDates(sel, picked){
   }
 }
 
+/* ── CSV parse / generate ── */
+function parseCSV(text){
+  text = text.replace(/^\uFEFF/,'');
+  var lines = text.trim().split('\n');
+  var result = [];
+  for(var i=1;i<lines.length;i++){
+    var cols = lines[i].match(/"([^"]*)"/g);
+    if(!cols||cols.length<4) continue;
+    var c = cols.map(function(x){return x.replace(/^"|"$/g,'').replace(/""/g,'"')});
+    var amt = parseFloat(c[2]);
+    if(!c[0]||isNaN(amt)) continue;
+    result.push({id:Date.now()+i, date:c[0], cat:c[1], amount:amt, item:c[3]||'', note:c[4]||''});
+  }
+  return result;
+}
+function toCSV(recs){
+  var rows=[['日期','類別','金額','品項說明','備註']];
+  recs.forEach(function(r){rows.push([r.date,r.cat,r.amount,r.item,r.note||''])});
+  return '\uFEFF'+rows.map(function(r){
+    return r.map(function(v){return '"'+String(v).replace(/"/g,'""')+'"'}).join(',')
+  }).join('\n');
+}
+
+/* ── File System Access API ── */
+async function openFile(){
+  try{
+    var handles = await window.showOpenFilePicker({
+      types:[{description:'CSV 記帳檔案',accept:{'text/csv':['.csv']}}],
+      multiple:false
+    });
+    fileHandle = handles[0];
+    var file = await fileHandle.getFile();
+    var text = await file.text();
+    records = parseCSV(text);
+    setFileStatus(file.name);
+    toast('✅ 已載入 '+records.length+' 筆資料');
+    renderRecords();
+  } catch(e){
+    if(e.name!=='AbortError') toast('⚠️ 開啟失敗：'+e.message);
+  }
+}
+
+async function newFile(){
+  try{
+    fileHandle = await window.showSaveFilePicker({
+      suggestedName:'記帳本.csv',
+      types:[{description:'CSV 記帳檔案',accept:{'text/csv':['.csv']}}]
+    });
+    records = [];
+    await saveFile();
+    var file = await fileHandle.getFile();
+    setFileStatus(file.name);
+    toast('✅ 新資料檔案已建立');
+  } catch(e){
+    if(e.name!=='AbortError') toast('⚠️ 建立失敗：'+e.message);
+  }
+}
+
+async function saveFile(){
+  if(!fileHandle){ toast('⚠️ 請先選取資料檔案'); return false; }
+  try{
+    var writable = await fileHandle.createWritable();
+    await writable.write(toCSV(records));
+    await writable.close();
+    return true;
+  } catch(e){
+    toast('⚠️ 儲存失敗：'+e.message);
+    return false;
+  }
+}
+
+/* ── Open / New file dialog ── */
+document.getElementById('btn-open').addEventListener('click', function(){
+  document.getElementById('dropdown').classList.remove('open');
+  if(!window.showOpenFilePicker){ toast('⚠️ 請用 Chrome 瀏覽器開啟'); return; }
+  // Ask open or new
+  var choice = confirm('選「確定」開啟舊檔案\n選「取消」建立新檔案');
+  if(choice) openFile(); else newFile();
+});
+
+/* ── Menu ── */
+document.getElementById('menu-btn').addEventListener('click',function(e){
+  e.stopPropagation();
+  document.getElementById('dropdown').classList.toggle('open');
+});
+document.addEventListener('click',function(){
+  document.getElementById('dropdown').classList.remove('open');
+});
+
+/* ── Sync to Google Sheets ── */
+document.getElementById('btn-sync').addEventListener('click',function(){
+  document.getElementById('dropdown').classList.remove('open');
+  if(records.length===0){toast('沒有資料可同步');return}
+  toast('⏳ 同步中...');
+  fetch(API,{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({action:'sync',records:records})
+  })
+  .then(function(r){return r.json()})
+  .then(function(res){
+    if(res.status==='ok') toast('✅ 已同步 '+res.count+' 筆到 Google Sheets');
+    else toast('⚠️ 同步失敗');
+  })
+  .catch(function(){toast('⚠️ 網路連線失敗')});
+});
+
 /* ── Tabs ── */
-document.getElementById('tab-input').addEventListener('click', function(){
+document.getElementById('tab-input').addEventListener('click',function(){
   document.getElementById('page-input').style.display='block';
   document.getElementById('page-records').style.display='none';
   document.getElementById('submit-area').style.display='block';
   document.getElementById('tab-input').classList.add('active');
   document.getElementById('tab-records').classList.remove('active');
 });
-document.getElementById('tab-records').addEventListener('click', function(){
+document.getElementById('tab-records').addEventListener('click',function(){
   document.getElementById('page-input').style.display='none';
   document.getElementById('page-records').style.display='block';
   document.getElementById('submit-area').style.display='none';
@@ -272,58 +348,40 @@ document.getElementById('tab-records').addEventListener('click', function(){
   renderRecords();
 });
 
-/* ── Menu ── */
-document.getElementById('menu-btn').addEventListener('click', function(e){
-  e.stopPropagation();
-  var d=document.getElementById('dropdown');
-  d.classList.toggle('open');
-});
-document.addEventListener('click', function(){
-  document.getElementById('dropdown').classList.remove('open');
-});
-document.getElementById('btn-export').addEventListener('click', function(){
-  document.getElementById('dropdown').classList.remove('open');
-  exportCSV();
-});
-document.getElementById('btn-import').addEventListener('click', function(){
-  document.getElementById('dropdown').classList.remove('open');
-  document.getElementById('csv-file').click();
-});
-document.getElementById('csv-file').addEventListener('change', importCSV);
-
 /* ── Add record ── */
-document.getElementById('submit-btn').addEventListener('click', function(){
-  var date=document.getElementById('f-date').value;
-  var cat=document.getElementById('f-cat').value;
-  var amount=parseFloat(document.getElementById('f-amount').value);
-  var item=document.getElementById('f-item').value.trim();
-  var note=document.getElementById('f-note').value.trim();
-  if(!amount||amount<=0){toast('⚠️ 請輸入金額');return}
-  if(!item){toast('⚠️ 請填寫品項說明');return}
-  var r=getRecords();
-  r.unshift({id:Date.now(),date:date,cat:cat,amount:amount,item:item,note:note});
-  setRecords(r);
+document.getElementById('submit-btn').addEventListener('click', async function(){
+  var date   = document.getElementById('f-date').value;
+  var cat    = document.getElementById('f-cat').value;
+  var amount = parseFloat(document.getElementById('f-amount').value);
+  var item   = document.getElementById('f-item').value.trim();
+  var note   = document.getElementById('f-note').value.trim();
+  if(!fileHandle){ toast('⚠️ 請先從右上角選取資料檔案'); return; }
+  if(!amount||amount<=0){ toast('⚠️ 請輸入金額'); return; }
+  if(!item){ toast('⚠️ 請填寫品項說明'); return; }
+
+  records.unshift({id:Date.now(), date:date, cat:cat, amount:amount, item:item, note:note});
+  var ok = await saveFile();
+  if(!ok){ records.shift(); return; }
+
   document.getElementById('f-amount').value='';
   document.getElementById('f-item').value='';
   document.getElementById('f-note').value='';
   var btn=document.getElementById('submit-btn');
-  btn.textContent='✓ 已記錄！'; btn.classList.add('ok');
+  btn.textContent='✓ 已儲存！'; btn.classList.add('ok');
   setTimeout(function(){btn.textContent='✓ 完成記帳';btn.classList.remove('ok')},1500);
-  toast('✅ '+cat+'  NT$ '+amount.toLocaleString());
+  toast('✅ '+cat+'  NT$ '+amount.toLocaleString()+' — 已寫入檔案');
 });
 
 /* ── Render records ── */
 function renderRecords(){
-  var records=getRecords();
   document.getElementById('rec-count').textContent='共 '+records.length+' 筆';
   var list=document.getElementById('rec-list');
   if(records.length===0){
-    list.innerHTML='<div class="empty"><div class="empty-icon">📭</div><p>還沒有記帳紀錄</p></div>';
+    list.innerHTML='<div class="empty"><div class="empty-icon">📭</div><p>還沒有紀錄<br>請先從右上角<br>選取或建立資料檔案</p></div>';
     return;
   }
   var groups={};
   records.forEach(function(r){if(!groups[r.date])groups[r.date]=[];groups[r.date].push(r)});
-  // 日期新到舊，同日期依輸入順序（id小=先輸入）
   var sortedDates=Object.keys(groups).sort(function(a,b){return b>a?1:-1});
   sortedDates.forEach(function(date){groups[date].sort(function(a,b){return b.id-a.id})});
   var html='';
@@ -342,92 +400,53 @@ function renderRecords(){
   });
   list.innerHTML=html;
   list.querySelectorAll('.rec-item').forEach(function(el){
-    el.addEventListener('click', function(){openEdit(parseInt(el.dataset.id))});
+    el.addEventListener('click',function(){openEdit(parseInt(el.dataset.id))});
   });
 }
 
 /* ── Edit modal ── */
 function openEdit(id){
-  var r=getRecords().find(function(x){return x.id===id});
+  var r=records.find(function(x){return x.id===id});
   if(!r)return;
   document.getElementById('e-id').value=id;
-  buildDates(document.getElementById('e-date'), r.date);
+  buildDates(document.getElementById('e-date'),r.date);
   document.getElementById('e-cat').value=r.cat;
   document.getElementById('e-amount').value=r.amount;
   document.getElementById('e-item').value=r.item;
   document.getElementById('e-note').value=r.note||'';
   document.getElementById('overlay').classList.add('open');
 }
-document.getElementById('overlay').addEventListener('click', function(e){
+document.getElementById('overlay').addEventListener('click',function(e){
   if(e.target===this) this.classList.remove('open');
 });
-document.getElementById('btn-save').addEventListener('click', function(){
-  var id=parseInt(document.getElementById('e-id').value);
-  var date=document.getElementById('e-date').value;
-  var cat=document.getElementById('e-cat').value;
-  var amount=parseFloat(document.getElementById('e-amount').value);
-  var item=document.getElementById('e-item').value.trim();
-  var note=document.getElementById('e-note').value.trim();
+document.getElementById('btn-save').addEventListener('click', async function(){
+  var id     = parseInt(document.getElementById('e-id').value);
+  var date   = document.getElementById('e-date').value;
+  var cat    = document.getElementById('e-cat').value;
+  var amount = parseFloat(document.getElementById('e-amount').value);
+  var item   = document.getElementById('e-item').value.trim();
+  var note   = document.getElementById('e-note').value.trim();
   if(!amount||amount<=0){toast('⚠️ 請輸入金額');return}
   if(!item){toast('⚠️ 請填寫品項說明');return}
-  var records=getRecords().map(function(r){
+  records = records.map(function(r){
     return r.id===id?{id:id,date:date,cat:cat,amount:amount,item:item,note:note}:r;
   });
-  setRecords(records);
+  var ok = await saveFile();
+  if(!ok) return;
   document.getElementById('overlay').classList.remove('open');
   renderRecords();
   toast('✅ 已儲存修改');
 });
-document.getElementById('btn-del').addEventListener('click', function(){
+document.getElementById('btn-del').addEventListener('click', async function(){
   if(!confirm('確定要刪除這筆記錄？'))return;
   var id=parseInt(document.getElementById('e-id').value);
-  setRecords(getRecords().filter(function(r){return r.id!==id}));
+  records=records.filter(function(r){return r.id!==id});
+  var ok = await saveFile();
+  if(!ok) return;
   document.getElementById('overlay').classList.remove('open');
   renderRecords();
   toast('已刪除');
 });
-
-/* ── Export CSV ── */
-function exportCSV(){
-  var records=getRecords();
-  if(records.length===0){toast('沒有資料可匯出');return}
-  var rows=[['日期','類別','金額','品項說明','備註']];
-  records.forEach(function(r){rows.push([r.date,r.cat,r.amount,r.item,r.note||''])});
-  var csv='\uFEFF'+rows.map(function(r){return r.map(function(v){return '"'+String(v).replace(/"/g,'""')+'"'}).join(',')}).join('\n');
-  var a=document.createElement('a');
-  a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
-  a.download='記帳紀錄_'+fmtDate(new Date())+'.csv';
-  a.click();
-  toast('✅ CSV 已匯出');
-}
-
-/* ── Import CSV ── */
-function importCSV(e){
-  var file=e.target.files[0]; if(!file)return;
-  var reader=new FileReader();
-  reader.onload=function(ev){
-    try{
-      var text=ev.target.result.replace(/^\uFEFF/,'');
-      var lines=text.trim().split('\n');
-      if(lines.length<2){toast('⚠️ 沒有資料');return}
-      var imported=[];
-      for(var i=1;i<lines.length;i++){
-        var cols=lines[i].match(/"([^"]*)"/g);
-        if(!cols||cols.length<4)continue;
-        var c=cols.map(function(x){return x.replace(/^"|"$/g,'').replace(/""/g,'"')});
-        var amt=parseFloat(c[2]);
-        if(!c[0]||isNaN(amt))continue;
-        imported.push({id:Date.now()+i,date:c[0],cat:c[1],amount:amt,item:c[3]||'',note:c[4]||''});
-      }
-      if(imported.length===0){toast('⚠️ 找不到有效資料');return}
-      if(!confirm('匯入 '+imported.length+' 筆資料？\n這會取代目前所有紀錄。'))return;
-      setRecords(imported);
-      toast('✅ 已匯入 '+imported.length+' 筆資料');
-      document.getElementById('csv-file').value='';
-    }catch(err){toast('⚠️ 匯入失敗')}
-  };
-  reader.readAsText(file,'UTF-8');
-}
 
 /* ── Init ── */
 buildDates(document.getElementById('f-date'), null);
