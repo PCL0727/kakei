@@ -325,7 +325,7 @@ function renderRecords(){
   records.forEach(function(r){if(!groups[r.date])groups[r.date]=[];groups[r.date].push(r)});
   // 日期新到舊，同日期依輸入順序（id小=先輸入）
   var sortedDates=Object.keys(groups).sort(function(a,b){return b>a?1:-1});
-  sortedDates.forEach(function(date){groups[date].sort(function(a,b){return a.id-b.id})});
+  sortedDates.forEach(function(date){groups[date].sort(function(a,b){return b.id-a.id})});
   var html='';
   sortedDates.forEach(function(date){
     var dayTotal=groups[date].reduce(function(s,r){return s+r.amount},0);
