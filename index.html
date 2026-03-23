@@ -18,285 +18,94 @@
   --border: #2a2e42;
   --accent: #4ade80;
   --accent-dim: rgba(74,222,128,0.12);
-  --accent-dim2: rgba(74,222,128,0.06);
   --text: #e8eaf2;
   --muted: #6b7090;
   --danger: #f87171;
   --input-bg: #1a1d2a;
+  --overlay: rgba(0,0,0,0.7);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; background: var(--bg); color: var(--text); font-family: 'Noto Sans TC', sans-serif; font-size: 15px; overscroll-behavior: none; }
 
-html, body {
-  height: 100%;
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'Noto Sans TC', sans-serif;
-  font-size: 15px;
-  overscroll-behavior: none;
-}
-
-/* ── Layout ── */
 .app { display: flex; flex-direction: column; height: 100vh; max-width: 480px; margin: 0 auto; }
 
-/* ── Header ── */
-.header {
-  padding: 52px 20px 16px;
-  background: var(--bg);
-  border-bottom: 1px solid var(--border);
-  flex-shrink: 0;
-}
+.header { padding: 52px 20px 16px; background: var(--bg); border-bottom: 1px solid var(--border); flex-shrink: 0; }
 .header-top { display: flex; justify-content: space-between; align-items: center; }
 .header h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
 .header h1 span { color: var(--accent); }
-
-.export-btn {
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  color: var(--muted);
-  font-size: 12px;
-  font-family: inherit;
-  padding: 6px 12px;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
+.export-btn { background: var(--surface2); border: 1px solid var(--border); color: var(--muted); font-size: 12px; font-family: inherit; padding: 6px 12px; border-radius: 20px; cursor: pointer; }
 .export-btn:active { background: var(--border); }
 
-/* ── Tabs ── */
-.tabs {
-  display: flex;
-  background: var(--bg);
-  border-bottom: 1px solid var(--border);
-  flex-shrink: 0;
-}
-.tab {
-  flex: 1;
-  padding: 12px;
-  text-align: center;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--muted);
-  cursor: pointer;
-  border-bottom: 2px solid transparent;
-  transition: all 0.2s;
-  font-family: inherit;
-  background: none;
-  border-top: none;
-  border-left: none;
-  border-right: none;
-}
-.tab.active {
-  color: var(--accent);
-  border-bottom-color: var(--accent);
-}
+.tabs { display: flex; background: var(--bg); border-bottom: 1px solid var(--border); flex-shrink: 0; }
+.tab { flex: 1; padding: 12px; text-align: center; font-size: 13px; font-weight: 500; color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; font-family: inherit; background: none; border-top: none; border-left: none; border-right: none; }
+.tab.active { color: var(--accent); border-bottom-color: var(--accent); }
 
-/* ── Scroll area ── */
 .content { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
 
 /* ── Input page ── */
 .input-page { padding: 20px 16px 100px; }
-
 .field { margin-bottom: 12px; }
-.field-label {
-  font-size: 11px;
-  font-weight: 500;
-  color: var(--muted);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  margin-bottom: 6px;
-  padding-left: 2px;
-}
-
-.field select,
-.field input {
-  width: 100%;
-  background: var(--input-bg);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  color: var(--text);
-  font-size: 16px;
-  font-family: inherit;
-  padding: 14px 16px;
-  outline: none;
-  appearance: none;
-  -webkit-appearance: none;
-  transition: border-color 0.2s;
-}
-.field select:focus,
-.field input:focus { border-color: var(--accent); }
+.field-label { font-size: 11px; font-weight: 500; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 6px; padding-left: 2px; }
+.field select, .field input { width: 100%; background: var(--input-bg); border: 1px solid var(--border); border-radius: 12px; color: var(--text); font-size: 16px; font-family: inherit; padding: 14px 16px; outline: none; appearance: none; -webkit-appearance: none; transition: border-color 0.2s; }
+.field select:focus, .field input:focus { border-color: var(--accent); }
 .field input::placeholder { color: var(--muted); }
-
 .select-wrap { position: relative; }
-.select-wrap::after {
-  content: '▾';
-  position: absolute;
-  right: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--muted);
-  pointer-events: none;
-  font-size: 14px;
-}
-
-/* ── Amount field ── */
+.select-wrap::after { content: '▾'; position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; font-size: 14px; }
 .amount-wrap { position: relative; }
-.amount-wrap::before {
-  content: 'NT$';
-  position: absolute;
-  left: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--muted);
-  font-size: 13px;
-  font-weight: 500;
-  pointer-events: none;
-}
+.amount-wrap::before { content: 'NT$'; position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 13px; font-weight: 500; pointer-events: none; }
 .amount-wrap input { padding-left: 52px; font-size: 20px; font-weight: 700; }
 
-/* ── Submit button ── */
-.submit-btn {
-  position: fixed;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  max-width: 480px;
-  padding: 0 16px 32px;
-  background: linear-gradient(to top, var(--bg) 60%, transparent);
-  padding-top: 24px;
-}
-.submit-btn button {
-  width: 100%;
-  background: var(--accent);
-  color: #0d0f14;
-  border: none;
-  border-radius: 14px;
-  padding: 17px;
-  font-size: 16px;
-  font-weight: 700;
-  font-family: inherit;
-  cursor: pointer;
-  letter-spacing: 0.02em;
-  transition: all 0.15s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
+.submit-btn { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; padding: 24px 16px 32px; background: linear-gradient(to top, var(--bg) 60%, transparent); }
+.submit-btn button { width: 100%; background: var(--accent); color: #0d0f14; border: none; border-radius: 14px; padding: 17px; font-size: 16px; font-weight: 700; font-family: inherit; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.15s; }
 .submit-btn button:active { transform: scale(0.97); opacity: 0.9; }
 .submit-btn button.success { background: #22c55e; }
 
 /* ── Records page ── */
 .records-page { padding: 12px 16px 80px; }
-
-.records-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 4px 0 12px;
-}
+.records-header { display: flex; justify-content: space-between; align-items: center; padding: 4px 0 12px; }
 .records-count { font-size: 12px; color: var(--muted); }
-.total-amount { font-size: 13px; font-weight: 700; color: var(--accent); }
 
-.empty-state {
-  text-align: center;
-  padding: 80px 20px;
-  color: var(--muted);
-}
+.empty-state { text-align: center; padding: 80px 20px; color: var(--muted); }
 .empty-icon { font-size: 48px; margin-bottom: 12px; opacity: 0.4; }
 .empty-state p { font-size: 14px; }
 
 .date-group { margin-bottom: 20px; }
-.date-label {
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--muted);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  padding: 0 4px 8px;
-  border-bottom: 1px solid var(--border);
-  margin-bottom: 8px;
-  display: flex;
-  justify-content: space-between;
-}
+.date-label { font-size: 11px; font-weight: 700; color: var(--muted); letter-spacing: 0.08em; padding: 0 4px 8px; border-bottom: 1px solid var(--border); margin-bottom: 8px; display: flex; justify-content: space-between; }
 .date-label span { color: var(--accent); font-weight: 600; }
 
-.record-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px;
-  background: var(--surface);
-  border-radius: 12px;
-  margin-bottom: 8px;
-  border: 1px solid var(--border);
-  animation: slideIn 0.2s ease;
-}
-@keyframes slideIn {
-  from { opacity: 0; transform: translateY(-8px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-.record-cat {
-  width: 40px; height: 40px;
-  border-radius: 10px;
-  background: var(--accent-dim);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 18px;
-  flex-shrink: 0;
-}
+.record-item { display: flex; align-items: center; gap: 12px; padding: 12px; background: var(--surface); border-radius: 12px; margin-bottom: 8px; border: 1px solid var(--border); cursor: pointer; transition: border-color 0.15s; animation: slideIn 0.2s ease; }
+.record-item:active { border-color: var(--accent); }
+@keyframes slideIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+.record-cat { width: 40px; height: 40px; border-radius: 10px; background: var(--accent-dim); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
 .record-info { flex: 1; min-width: 0; }
-.record-item-name {
-  font-size: 14px;
-  font-weight: 500;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+.record-item-name { font-size: 14px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .record-meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
-.record-amount {
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--text);
-  white-space: nowrap;
-}
-.record-delete {
-  color: var(--muted);
-  font-size: 16px;
-  padding: 4px 8px;
-  cursor: pointer;
-  border-radius: 6px;
-  transition: color 0.2s;
-  background: none;
-  border: none;
-  font-family: inherit;
-}
-.record-delete:active { color: var(--danger); }
+.record-amount { font-size: 16px; font-weight: 700; white-space: nowrap; }
+.record-edit-hint { font-size: 10px; color: var(--muted); opacity: 0.5; margin-left: 4px; }
+
+/* ── Modal (edit/delete) ── */
+.modal-overlay { position: fixed; inset: 0; background: var(--overlay); z-index: 100; display: flex; align-items: flex-end; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.25s; }
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+.modal { background: var(--surface); border-radius: 20px 20px 0 0; width: 100%; max-width: 480px; padding: 20px 16px 40px; transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.4,0,0.2,1); border-top: 1px solid var(--border); }
+.modal-overlay.open .modal { transform: translateY(0); }
+.modal-handle { width: 36px; height: 4px; background: var(--border); border-radius: 2px; margin: 0 auto 20px; }
+.modal-title { font-size: 13px; font-weight: 700; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 16px; }
+.modal .field { margin-bottom: 10px; }
+.modal .field select, .modal .field input { background: var(--input-bg); border: 1px solid var(--border); border-radius: 12px; color: var(--text); font-size: 15px; font-family: inherit; padding: 12px 14px; outline: none; appearance: none; -webkit-appearance: none; width: 100%; }
+.modal .field select:focus, .modal .field input:focus { border-color: var(--accent); }
+.modal .select-wrap::after { content: '▾'; position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; font-size: 14px; }
+.modal .amount-wrap::before { content: 'NT$'; position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 12px; font-weight: 500; pointer-events: none; }
+.modal .amount-wrap input { padding-left: 48px; font-size: 18px; font-weight: 700; }
+.modal-actions { display: flex; gap: 10px; margin-top: 16px; }
+.btn-save { flex: 1; background: var(--accent); color: #0d0f14; border: none; border-radius: 12px; padding: 14px; font-size: 15px; font-weight: 700; font-family: inherit; cursor: pointer; }
+.btn-save:active { opacity: 0.85; }
+.btn-delete { background: rgba(248,113,113,0.12); color: var(--danger); border: 1px solid rgba(248,113,113,0.2); border-radius: 12px; padding: 14px 18px; font-size: 15px; font-family: inherit; cursor: pointer; }
+.btn-delete:active { background: rgba(248,113,113,0.25); }
 
 /* ── Toast ── */
-.toast {
-  position: fixed;
-  bottom: 100px;
-  left: 50%;
-  transform: translateX(-50%) translateY(20px);
-  background: var(--surface2);
-  border: 1px solid var(--accent);
-  color: var(--accent);
-  padding: 10px 20px;
-  border-radius: 20px;
-  font-size: 13px;
-  font-weight: 500;
-  opacity: 0;
-  transition: all 0.3s;
-  pointer-events: none;
-  white-space: nowrap;
-  z-index: 999;
-}
-.toast.show {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-}
+.toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--surface2); border: 1px solid var(--accent); color: var(--accent); padding: 10px 20px; border-radius: 20px; font-size: 13px; font-weight: 500; opacity: 0; transition: all 0.3s; pointer-events: none; white-space: nowrap; z-index: 999; }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 </style>
 </head>
 <body>
@@ -318,57 +127,39 @@ html, body {
 
     <!-- Input Tab -->
     <div id="input-tab" class="input-page">
-
       <div class="field">
         <div class="field-label">日期</div>
-        <div class="select-wrap">
-          <select id="date-select"></select>
-        </div>
+        <div class="select-wrap"><select id="date-select"></select></div>
       </div>
-
       <div class="field">
         <div class="field-label">類別</div>
         <div class="select-wrap">
           <select id="cat-select">
-            <option>餐飲</option>
-            <option>交通</option>
-            <option>生活</option>
-            <option>住房</option>
-            <option>醫療</option>
-            <option>娛樂</option>
-            <option>教育</option>
-            <option>服飾</option>
-            <option>投資</option>
-            <option>薪資</option>
-            <option>其他</option>
+            <option>餐飲</option><option>交通</option><option>生活</option>
+            <option>住房</option><option>醫療</option><option>娛樂</option>
+            <option>教育</option><option>服飾</option><option>投資</option>
+            <option>薪資</option><option>其他</option>
           </select>
         </div>
       </div>
-
       <div class="field">
         <div class="field-label">金額</div>
-        <div class="amount-wrap">
-          <input type="number" id="amount-input" placeholder="0" inputmode="numeric">
-        </div>
+        <div class="amount-wrap"><input type="number" id="amount-input" placeholder="0" inputmode="numeric"></div>
       </div>
-
       <div class="field">
         <div class="field-label">品項說明</div>
         <input type="text" id="item-input" placeholder="例：午餐便當">
       </div>
-
       <div class="field">
         <div class="field-label">備註（選填）</div>
         <input type="text" id="note-input" placeholder="選填">
       </div>
-
     </div>
 
     <!-- Records Tab -->
     <div id="records-tab" class="records-page" style="display:none">
       <div class="records-header">
         <div class="records-count" id="records-count">共 0 筆</div>
-        <div class="total-amount" id="total-amount"></div>
       </div>
       <div id="records-list"></div>
     </div>
@@ -382,17 +173,57 @@ html, body {
   </div>
 </div>
 
+<!-- Edit Modal -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">編輯記帳</div>
+    <input type="hidden" id="edit-id">
+
+    <div class="field">
+      <div class="field-label">日期</div>
+      <div class="select-wrap"><select id="edit-date"></select></div>
+    </div>
+    <div class="field">
+      <div class="field-label">類別</div>
+      <div class="select-wrap">
+        <select id="edit-cat">
+          <option>餐飲</option><option>交通</option><option>生活</option>
+          <option>住房</option><option>醫療</option><option>娛樂</option>
+          <option>教育</option><option>服飾</option><option>投資</option>
+          <option>薪資</option><option>其他</option>
+        </select>
+      </div>
+    </div>
+    <div class="field">
+      <div class="field-label">金額</div>
+      <div class="amount-wrap"><input type="number" id="edit-amount" inputmode="numeric"></div>
+    </div>
+    <div class="field">
+      <div class="field-label">品項說明</div>
+      <input type="text" id="edit-item">
+    </div>
+    <div class="field">
+      <div class="field-label">備註</div>
+      <input type="text" id="edit-note" placeholder="選填">
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-delete" onclick="deleteRecord()">刪除</button>
+      <button class="btn-save" onclick="saveEdit()">儲存修改</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
-// ── Category icons ──────────────────────────────
 const CAT_ICON = {
   '餐飲':'🍱','交通':'🚌','生活':'🛒','住房':'🏠',
   '醫療':'💊','娛樂':'🎬','教育':'📚','服飾':'👕',
   '投資':'📈','薪資':'💼','其他':'📦'
 };
 
-// ── Date helpers ────────────────────────────────
 function formatDate(d) {
   const y = d.getFullYear();
   const m = String(d.getMonth()+1).padStart(2,'0');
@@ -400,10 +231,9 @@ function formatDate(d) {
   return y+'/'+m+'/'+dd;
 }
 
-function initDateSelect() {
-  const sel = document.getElementById('date-select');
+function buildDateOptions(selectEl, selectedVal) {
   const today = new Date();
-  sel.innerHTML = '';
+  selectEl.innerHTML = '';
   for (let i = 0; i < 30; i++) {
     const d = new Date(today);
     d.setDate(today.getDate() - i);
@@ -411,20 +241,18 @@ function initDateSelect() {
     const opt = document.createElement('option');
     opt.value = str;
     opt.textContent = i === 0 ? '今天  ' + str : str;
-    sel.appendChild(opt);
+    if (selectedVal && str === selectedVal) opt.selected = true;
+    selectEl.appendChild(opt);
   }
 }
 
-// ── Storage ─────────────────────────────────────
 function getRecords() {
   try { return JSON.parse(localStorage.getItem('records') || '[]'); }
   catch(e) { return []; }
 }
-function saveRecords(r) {
-  localStorage.setItem('records', JSON.stringify(r));
-}
+function saveRecords(r) { localStorage.setItem('records', JSON.stringify(r)); }
 
-// ── Add record ──────────────────────────────────
+// ── Add ──
 function addRecord() {
   const date   = document.getElementById('date-select').value;
   const cat    = document.getElementById('cat-select').value;
@@ -439,7 +267,6 @@ function addRecord() {
   records.unshift({ id: Date.now(), date, cat, amount, item, note });
   saveRecords(records);
 
-  // Reset
   document.getElementById('amount-input').value = '';
   document.getElementById('item-input').value = '';
   document.getElementById('note-input').value = '';
@@ -447,57 +274,84 @@ function addRecord() {
   const btn = document.getElementById('submit-btn');
   btn.classList.add('success');
   btn.innerHTML = '<span>✓</span> 已記錄！';
-  setTimeout(() => {
-    btn.classList.remove('success');
-    btn.innerHTML = '<span>✓</span> 完成記帳';
-  }, 1500);
-
+  setTimeout(() => { btn.classList.remove('success'); btn.innerHTML = '<span>✓</span> 完成記帳'; }, 1500);
   showToast('✅ ' + cat + '  NT$ ' + amount.toLocaleString());
 }
 
-// ── Delete record ───────────────────────────────
-function deleteRecord(id) {
-  if (!confirm('刪除這筆記錄？')) return;
+// ── Edit modal ──
+function openEdit(id) {
+  const records = getRecords();
+  const r = records.find(x => x.id === id);
+  if (!r) return;
+
+  document.getElementById('edit-id').value = id;
+  buildDateOptions(document.getElementById('edit-date'), r.date);
+  document.getElementById('edit-cat').value = r.cat;
+  document.getElementById('edit-amount').value = r.amount;
+  document.getElementById('edit-item').value = r.item;
+  document.getElementById('edit-note').value = r.note || '';
+
+  document.getElementById('modal-overlay').classList.add('open');
+}
+
+function closeModal(e) {
+  if (e && e.target !== document.getElementById('modal-overlay')) return;
+  document.getElementById('modal-overlay').classList.remove('open');
+}
+
+function saveEdit() {
+  const id     = parseInt(document.getElementById('edit-id').value);
+  const date   = document.getElementById('edit-date').value;
+  const cat    = document.getElementById('edit-cat').value;
+  const amount = parseFloat(document.getElementById('edit-amount').value);
+  const item   = document.getElementById('edit-item').value.trim();
+  const note   = document.getElementById('edit-note').value.trim();
+
+  if (!amount || amount <= 0) { showToast('⚠️ 請輸入金額'); return; }
+  if (!item) { showToast('⚠️ 請填寫品項說明'); return; }
+
+  const records = getRecords().map(r => r.id === id ? { id, date, cat, amount, item, note } : r);
+  saveRecords(records);
+  document.getElementById('modal-overlay').classList.remove('open');
+  renderRecords();
+  showToast('✅ 已儲存修改');
+}
+
+function deleteRecord() {
+  const id = parseInt(document.getElementById('edit-id').value);
+  if (!confirm('確定要刪除這筆記錄？')) return;
   const records = getRecords().filter(r => r.id !== id);
   saveRecords(records);
+  document.getElementById('modal-overlay').classList.remove('open');
   renderRecords();
   showToast('已刪除');
 }
 
-// ── Render records ───────────────────────────────
+// ── Render ──
 function renderRecords() {
   const records = getRecords();
   const list = document.getElementById('records-list');
-  const countEl = document.getElementById('records-count');
-  const totalEl = document.getElementById('total-amount');
-
-  countEl.textContent = '共 ' + records.length + ' 筆';
-  const total = records.reduce((s, r) => s + r.amount, 0);
-  totalEl.textContent = total > 0 ? '總計 NT$ ' + total.toLocaleString() : '';
+  document.getElementById('records-count').textContent = '共 ' + records.length + ' 筆';
 
   if (records.length === 0) {
     list.innerHTML = '<div class="empty-state"><div class="empty-icon">📭</div><p>還沒有記帳紀錄</p></div>';
     return;
   }
 
-  // Group by date
   const groups = {};
-  records.forEach(r => {
-    if (!groups[r.date]) groups[r.date] = [];
-    groups[r.date].push(r);
-  });
+  records.forEach(r => { if (!groups[r.date]) groups[r.date] = []; groups[r.date].push(r); });
 
   list.innerHTML = Object.keys(groups).map(date => {
     const dayTotal = groups[date].reduce((s,r) => s + r.amount, 0);
     const items = groups[date].map(r => `
-      <div class="record-item">
+      <div class="record-item" onclick="openEdit(${r.id})">
         <div class="record-cat">${CAT_ICON[r.cat] || '📦'}</div>
         <div class="record-info">
           <div class="record-item-name">${r.item}</div>
           <div class="record-meta">${r.cat}${r.note ? '・' + r.note : ''}</div>
         </div>
         <div class="record-amount">NT$ ${r.amount.toLocaleString()}</div>
-        <button class="record-delete" onclick="deleteRecord(${r.id})">✕</button>
+        <span class="record-edit-hint">›</span>
       </div>
     `).join('');
     return `
@@ -509,7 +363,7 @@ function renderRecords() {
   }).join('');
 }
 
-// ── Tabs ─────────────────────────────────────────
+// ── Tabs ──
 function showTab(tab) {
   document.getElementById('input-tab').style.display   = tab === 'input'   ? 'block' : 'none';
   document.getElementById('records-tab').style.display = tab === 'records' ? 'block' : 'none';
@@ -520,41 +374,32 @@ function showTab(tab) {
   if (tab === 'records') renderRecords();
 }
 
-// ── Export CSV ───────────────────────────────────
+// ── Export CSV ──
 function exportCSV() {
   const records = getRecords();
   if (records.length === 0) { showToast('沒有資料可匯出'); return; }
   const rows = [['日期','類別','金額','品項說明','備註']];
-  records.forEach(r => rows.push([r.date, r.cat, r.amount, r.item, r.note]));
+  records.forEach(r => rows.push([r.date, r.cat, r.amount, r.item, r.note || '']));
   const csv = '\uFEFF' + rows.map(r => r.map(v => '"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');
   const blob = new Blob([csv], { type: 'text/csv' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
   a.download = '記帳紀錄_' + formatDate(new Date()) + '.csv';
   a.click();
-  showToast('✅ CSV 已匯出');
+  showToast('✅ CSV 已匯出，資料不受影響');
 }
 
-// ── Toast ─────────────────────────────────────────
+// ── Toast ──
 function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg;
   t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2000);
+  setTimeout(() => t.classList.remove('show'), 2200);
 }
 
-// ── Enter key submit ──────────────────────────────
-document.addEventListener('keydown', e => {
-  if (e.key === 'Enter') addRecord();
-});
-
-// ── Init ─────────────────────────────────────────
-initDateSelect();
-
-// Service Worker for offline
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js').catch(() => {});
-}
+// ── Init ──
+buildDateOptions(document.getElementById('date-select'), null);
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
 </script>
 </body>
 </html>
