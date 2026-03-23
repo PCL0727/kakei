@@ -28,7 +28,7 @@
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 html, body { height: 100%; background: var(--bg); color: var(--text); font-family: 'Noto Sans TC', sans-serif; font-size: 15px; overscroll-behavior: none; }
 
-.app { display: flex; flex-direction: column; height: 100vh; max-width: 480px; margin: 0 auto; }
+.app { display: flex; flex-direction: column; height: 100vh; max-width: 480px; margin: 0 auto; overflow: visible; }
 
 .header { padding: 52px 20px 16px; background: var(--bg); border-bottom: 1px solid var(--border); flex-shrink: 0; position: relative; }
 .header-top { display: flex; justify-content: space-between; align-items: center; }
@@ -39,7 +39,7 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 .menu-btn { background: none; border: none; cursor: pointer; padding: 6px; display: flex; flex-direction: column; gap: 5px; }
 .menu-btn span { display: block; width: 22px; height: 2px; background: var(--muted); border-radius: 2px; transition: background 0.2s; }
 .menu-btn:active span { background: var(--text); }
-.dropdown { position: absolute; top: 88px; right: 16px; background: var(--surface2); border: 1px solid var(--border); border-radius: 14px; min-width: 160px; z-index: 200; overflow: hidden; opacity: 0; pointer-events: none; transform: translateY(-8px); transition: all 0.2s; }
+.dropdown { position: fixed; top: 88px; right: 16px; background: var(--surface2); border: 1px solid var(--border); border-radius: 14px; min-width: 160px; z-index: 9999; overflow: hidden; opacity: 0; pointer-events: none; transform: translateY(-8px); transition: all 0.2s; }
 .dropdown.open { opacity: 1; pointer-events: all; transform: translateY(0); }
 .dropdown-item { width: 100%; background: none; border: none; color: var(--text); font-family: inherit; font-size: 14px; padding: 14px 18px; text-align: left; cursor: pointer; display: flex; align-items: center; gap: 10px; }
 .dropdown-item:active { background: var(--border); }
@@ -121,7 +121,7 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 <div class="app">
   <div class="header">
     <div class="header-top">
-      <h1>💰 <span>記帳本</span></h1>
+      <h1>💰 <span>記帳本</span> <small style="font-size:11px;font-weight:400;color:var(--muted);letter-spacing:0">v0.00</small></h1>
       <button class="menu-btn" onclick="toggleMenu()">
         <span></span><span></span><span></span>
       </button>
@@ -236,9 +236,8 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 
 <script>
 const CAT_ICON = {
-  '餐飲':'🍱','交通':'🚌','生活':'🛒','住房':'🏠',
-  '醫療':'💊','娛樂':'🎬','教育':'📚','服飾':'👕',
-  '投資':'📈','薪資':'💼','其他':'📦'
+  '飲食':'🍱','住房':'🏠','交通':'🚌',
+  '娛樂':'🎬','醫療':'💊','其他':'📦'
 };
 
 function formatDate(d) {
