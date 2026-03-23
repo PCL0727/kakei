@@ -283,7 +283,14 @@ async function newFile(){
 }
 
 async function saveFile(){
-  if(!fileHandle){ toast('⚠️ 請先選取資料檔案'); return false; }
+  if(!fileHandle){
+    // 暫存模式：下載 CSV
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([toCSV(records)],{type:'text/csv'}));
+    a.download = '記帳本.csv';
+    a.click();
+    return true;
+  }
   try{
     var writable = await fileHandle.createWritable();
     await writable.write(toCSV(records));
@@ -298,8 +305,13 @@ async function saveFile(){
 /* ── Open / New file dialog ── */
 document.getElementById('btn-open').addEventListener('click', function(){
   document.getElementById('dropdown').classList.remove('open');
-  if(!window.showOpenFilePicker){ toast('⚠️ 請用 Chrome 瀏覽器開啟'); return; }
-  // Ask open or new
+  if(!window.showOpenFilePicker){
+    // 不支援時改用傳統方式
+    var choice2 = confirm('選「確定」開啟舊檔案\n選「取消」建立新檔案');
+    if(choice2){ document.getElementById('csv-fallback').click(); }
+    else { newFileFallback(); }
+    return;
+  }
   var choice = confirm('選「確定」開啟舊檔案\n選「取消」建立新檔案');
   if(choice) openFile(); else newFile();
 });
@@ -446,6 +458,27 @@ document.getElementById('btn-del').addEventListener('click', async function(){
   document.getElementById('overlay').classList.remove('open');
   renderRecords();
   toast('已刪除');
+});
+
+/* ── Fallback (non-Chrome) ── */
+function newFileFallback(){
+  records = [];
+  setFileStatus('記帳本.csv（暫存模式）');
+  toast('✅ 已建立新記帳（記得定期匯出備份）');
+}
+document.getElementById('csv-fallback').addEventListener('change', function(e){
+  var file = e.target.files[0]; if(!file) return;
+  var reader = new FileReader();
+  reader.onload = function(ev){
+    try{
+      records = parseCSV(ev.target.result);
+      setFileStatus(file.name+' （暫存模式）');
+      toast('✅ 已載入 '+records.length+' 筆資料');
+      renderRecords();
+    }catch(err){ toast('⚠️ 載入失敗'); }
+  };
+  reader.readAsText(file,'UTF-8');
+  e.target.value='';
 });
 
 /* ── Init ── */
